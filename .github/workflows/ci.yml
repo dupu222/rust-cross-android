@@ -26,75 +26,6 @@ jobs:
     - uses: actions/checkout@v3
     - uses: EmbarkStudios/cargo-deny-action@v1
 
-  fmt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: ./.github/actions/setup-rust
-        with:
-          components: rustfmt
-
-      - name: Run rustfmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: -- --check
-
-  clippy:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-          - windows-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: ./.github/actions/setup-rust
-        with:
-          components: clippy
-          toolchain: 1.58.1 # MSRV, Minimally Supported Rust Version. Make sure to update README.md
-
-      - name: Run clippy
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --locked --all-targets --all-features --workspace -- -D warnings
-
-  test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-          - windows-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: ./.github/actions/setup-rust
-      - uses: ./.github/actions/cargo-llvm-cov
-        with:
-          name: test-${{matrix.os}}
-
-      - name: Run unit tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --locked --all-targets --workspace --all-features
-        timeout-minutes: 10
-  check:
-    runs-on: ubuntu-latest
-    outputs:
-      is-latest: ${{ steps.check.outputs.is-latest }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-rust
-      - run: cargo xtask ci-job check
-        id: check
-        shell: bash
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
@@ -251,7 +182,7 @@ jobs:
         shell: bash
 
   conclusion:
-    needs: [shellcheck, fmt, clippy, test, generate-matrix, build, check]
+    needs: [shellcheck,  generate-matrix, build, check]
     if: always()
     runs-on: ubuntu-latest
     steps:
