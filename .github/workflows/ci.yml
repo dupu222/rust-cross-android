@@ -165,7 +165,7 @@ jobs:
 #          registry: ghcr.io
 #          username: ${{ github.actor }}
 #          password: ${{ secrets.GITHUB_TOKEN }}
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Push image to GitHub Container Registry
         if: >
