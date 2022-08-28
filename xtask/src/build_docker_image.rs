@@ -19,7 +19,7 @@ pub struct BuildDockerImage {
     #[clap(long)]
     pub tag: Option<String>,
     /// Repository name for image.
-    #[clap(long, default_value = docker::CROSS_IMAGE)]
+    #[clap(long, default_value = "dupu222/rust-cross-android")]
     pub repository: String,
     /// Newline separated labels
     #[clap(long, env = "LABELS")]
