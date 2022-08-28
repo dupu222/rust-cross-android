@@ -182,7 +182,7 @@ jobs:
         shell: bash
 
   conclusion:
-    needs: [shellcheck,  generate-matrix, build, check]
+    needs: [shellcheck,  generate-matrix, build]
     if: always()
     runs-on: ubuntu-latest
     steps:
