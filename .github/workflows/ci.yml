@@ -86,7 +86,7 @@ jobs:
   build:
     name: target (${{ matrix.pretty }},${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    needs: [shellcheck, test, generate-matrix, check]
+    needs: [shellcheck,  generate-matrix]
     if: github.event_name == 'push'
     strategy:
       fail-fast: false
