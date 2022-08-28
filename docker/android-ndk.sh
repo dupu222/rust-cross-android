@@ -6,7 +6,7 @@ set -euo pipefail
 # shellcheck disable=SC1091
 . lib.sh
 
-NDK_URL=https://dl.google.com/android/repository/android-ndk-r21d-linux-x86_64.zip
+NDK_URL=https://dl.google.com/android/repository/android-ndk-r13b-linux-x86_64.zip
 
 main() {
     local arch="${1}" \
@@ -41,9 +41,9 @@ main() {
     esac
     triples=(
       "aarch64-linux-android"
-      "arm-linux-androideabi"
-      "i686-linux-android"
-      "x86_64-linux-android"
+#      "arm-linux-androideabi"
+#      "i686-linux-android"
+#      "x86_64-linux-android"
     )
     for triple in "${triples[@]}"; do
       if ! [[ "${triple}" =~ ^"${triple_arch}".* ]]; then
