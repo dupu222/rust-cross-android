@@ -14,8 +14,8 @@ COPY android-ndk.sh /
 RUN /android-ndk.sh arm64 21
 ENV PATH=$PATH:/android-ndk/bin
 
-COPY android-system.sh /
-RUN /android-system.sh arm64
+#COPY android-system.sh /
+#RUN /android-system.sh arm64
 
 #COPY qemu.sh /
 #RUN /qemu.sh aarch64
