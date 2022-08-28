@@ -137,26 +137,26 @@ jobs:
             name=${{ steps.prepare-meta.outputs.image }}
           labels: |
             ${{ fromJSON(steps.prepare-meta.outputs.labels) }}
-      - name: Build Docker image
-        id: build-docker-image
-        if: steps.prepare-meta.outputs.has-image
-        timeout-minutes: 120
-        run: cargo xtask build-docker-image -v "${TARGET}${SUB:+.$SUB}"
-        env:
-          TARGET: ${{ matrix.target }}
-          SUB: ${{ matrix.sub }}
-          LABELS: ${{ steps.docker-meta.outputs.labels }}
-          LATEST: ${{ needs.check.outputs.is-latest || 'false' }}
-        shell: bash
-      - name: Set Docker image for test
-        if: steps.prepare-meta.outputs.has-image
-        run: |
-          TARGET_VAR="cross_target_${TARGET//-/_}_image"
-          echo "${TARGET_VAR^^}=${IMAGE}" | tee -a "${GITHUB_ENV}"
-        env:
-          TARGET: ${{ matrix.target }}
-          IMAGE: ${{ steps.build-docker-image.outputs.image }}
-        shell: bash
+#      - name: Build Docker image
+#        id: build-docker-image
+#        if: steps.prepare-meta.outputs.has-image
+#        timeout-minutes: 120
+#        run: cargo xtask build-docker-image -v "${TARGET}${SUB:+.$SUB}"
+#        env:
+#          TARGET: ${{ matrix.target }}
+#          SUB: ${{ matrix.sub }}
+#          LABELS: ${{ steps.docker-meta.outputs.labels }}
+#          LATEST: ${{ needs.check.outputs.is-latest || 'false' }}
+#        shell: bash
+#      - name: Set Docker image for test
+#        if: steps.prepare-meta.outputs.has-image
+#        run: |
+#          TARGET_VAR="cross_target_${TARGET//-/_}_image"
+#          echo "${TARGET_VAR^^}=${IMAGE}" | tee -a "${GITHUB_ENV}"
+#        env:
+#          TARGET: ${{ matrix.target }}
+#          IMAGE: ${{ steps.build-docker-image.outputs.image }}
+#        shell: bash
 
       - name: Login to GitHub Container Registry
         if: steps.prepare-meta.outputs.has-image
